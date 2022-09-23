@@ -1,0 +1,13 @@
+{
+    "local": {
+        "apiUrl": "https://localhost:38080/api"
+    },
+
+    "dev": {
+        "apiUrl": "https://localhost:38080/api"
+    },
+
+    "prod": {
+        "apiUrl": "https://dtinfo.vaiv.kr/api"
+    }
+}

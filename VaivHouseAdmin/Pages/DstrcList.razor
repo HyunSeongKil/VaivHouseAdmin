@@ -1,0 +1,58 @@
+﻿@page "/dstrcs"
+@using System.Text.Json
+@using VaivHouseAdmin.Domain
+@using VaivHouseAdmin.Service;
+@using VaivHouseAdmin.Service.Impl
+@inject HttpClient Http
+@inject NavigationManager NavManager
+@inject IDstrcService DstrcService
+
+
+<h3>지구 목록</h3>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>표시순서</th>
+			<th>아이디</th>
+			<th>지구 명</th>
+			<th>활성화 여부</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var x in dstrcDtos)
+		{
+			<tr>
+				<td>@x.IndictOrdrValue</td>
+				<td>@x.DstrcId</td>
+				<td>
+					<a href="javascript:;" @onclick="()=>DstrcClicked(x)">@x.DstrcNm</a>					
+				</td>
+				<td>@x.ActvtyAt</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+@code {
+
+	private IList<DstrcDto> dstrcDtos = new List<DstrcDto>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await GetDstrcs();
+	}
+
+	private async Task GetDstrcs()
+	{
+		this.dstrcDtos = await DstrcService.GetAll();
+	}
+
+	void DstrcClicked(DstrcDto dto)
+	{
+		Console.WriteLine(dto);
+		NavManager.NavigateTo("/dstrcs/" + dto.DstrcId);
+	}
+}

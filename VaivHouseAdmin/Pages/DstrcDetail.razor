@@ -1,0 +1,50 @@
+﻿@page "/dstrcs/{DstrcId:int}"
+@using VaivHouseAdmin.Domain
+@using VaivHouseAdmin.Service
+@inject IDstrcService DstrcService
+
+<h3>지구 상세</h3>
+
+@if(null != _dstrcDto)
+{
+	<table class="table">
+		<colgroup>
+			<col width="15%" />
+			<col width="35%" />
+			<col width="15%" />
+			<col width="35%" />
+		</colgroup>
+		<tbody>
+			<tr>
+				<th>아이디</th>
+				<td>@_dstrcDto.DstrcId</td>
+				<th>지구 명</th>
+				<td>@_dstrcDto.DstrcNm</td>
+			</tr>
+			<tr>
+				<th>안내문구</th>
+				<td>@_dstrcDto.GuidanceCn</td>
+				<th>화면표시순서</th>
+				<td>@_dstrcDto.IndictOrdrValue</td>
+			</tr>
+			<tr>
+				<th>활성화 여부</th>
+				<td>@_dstrcDto.ActvtyAt</td>
+				<th>공통 cms 메뉴 일련번호</th>
+				<td>@_dstrcDto.CmmnCmsMenuSeqNo</td>
+			</tr>
+		</tbody>
+	</table>	
+}
+
+@code {
+	[Parameter]
+	public int DstrcId { get; set; }
+
+	private DstrcDto _dstrcDto = null;
+
+	protected override async Task OnParametersSetAsync()
+	{
+		this._dstrcDto = await DstrcService.GetByDstrcId(DstrcId);
+	}
+}
